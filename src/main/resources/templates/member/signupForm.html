@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<body>
+
+<th:block layout:fragment="content">
+    <img src="/img/music.png">
+
+    <form action="/members/signup" method="post" th:object="${membersDTO}">
+        <div class="row mb-2">
+            <div class="col">
+                <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Email"></div>
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></p>
+        </div>
+        <div class="row mb-2">
+            <div class="col">
+                <input type="text" th:field="*{name}" class="form-control" id="username" placeholder="Username"></div>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError"></p>
+        </div>
+        <div class="row mb-2">
+            <div class="col">
+                <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="Password"></div>
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>
+        </div>
+        <div class="row mb-2">
+            <div class="col">
+                <input type="text" th:field="*{address}" class="form-control" id="address" placeholder="Address"></div>
+            <p th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="fieldError"></p>
+        </div>
+        <div class="row">
+            <button  type="submit" class="btn text-white mb-1" style="background-color: #6F37DE">회원가입</button>
+            <button  type="submit" class="btn text-white" style="background-color: #6F37DE; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">로그인</button>
+        </div>
+    </form>
+
+</th:block>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        let msg = [[${msg}]]
+        if (msg){
+            alert(msg)
+        }
+        $("form").on("submit", function (e){
+            if (!nameValid()){
+                return false
+            }
+        })
+        function nameValid(){
+            let nameValue = $("#name").val();
+            if (nameValue.length < 2 || nameValue.length > 10){
+                alert("이름은 2자 이상 10자 이하여야 합니다.")
+                $(".name").text("이름은 2자 이상 10자 이하여야 합니다.")
+                return false;
+            }else {
+                return false;
+            }
+        }
+    </script>
+</th:block>
+</body>
+</html>

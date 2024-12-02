@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout1}">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+</head>
+<body>
+<th:block layout:fragment="content">
+    <img src="/img/music.png">
+
+    <div th:if="${membersDTO != null}">
+        <p>로그인된 사용자: <span th:text="${membersDTO.email}"></span></p>
+    </div>
+
+<form action="/members/signin" method="post" th:object="${membersDTO}">
+    <div class="row mb-2">
+        <div class="col">
+            <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Email" required></div>
+    </div>
+    <div class="row mb-2">
+        <div class="col">
+            <input type="password" th:field="*{password}" class="form-control" id="password" placeholder="Password" required></div>
+    </div>
+    <div class="row">
+        <button  type="submit" class="btn text-white mb-1" style="background-color: #6F37DE">로그인</button>
+        <button  type="button" class="btn text-white" style="background-color: #6F37DE; --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">회원가입</button>
+    </div>
+</form>
+</th:block>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        let errorMsg = [[${param.error}]];
+        if (errorMsg) {
+            alert("이메일 또는 비밀번호를 확인해주세요.");
+        }
+    </script>
+</th:block>
+</body>
+</html>

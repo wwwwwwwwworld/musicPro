@@ -27,6 +27,8 @@ public class Members {
     @Column(nullable = false)
     private String password;
 
+    private String address;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 }

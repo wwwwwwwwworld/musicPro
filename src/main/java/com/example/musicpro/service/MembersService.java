@@ -41,7 +41,11 @@ public class MembersService implements UserDetailsService {
         // 회원가입 여부 확인
         validateDuplicateMember(membersDTO.getEmail());
 
-        return null;
+        // dto를 entity로 변경
+
+        Members members = membersDTO.dtoToEntity(membersDTO);
+        members = membersRepository.save(members);
+        return members;
     }
     // 회원가입시 회원 가입여부 확인
     private void validateDuplicateMember(String email){
