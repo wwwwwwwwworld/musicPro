@@ -32,7 +32,7 @@ public class SecurityConfig {
                 // 로그인
                 .formLogin(
                         formLogin -> formLogin.loginPage("/members/signin") // 로그인 페이지
-                                .defaultSuccessUrl("/members/signin")
+                                .defaultSuccessUrl("/")
                                 .usernameParameter("email")
                 )
                 // 로그아웃

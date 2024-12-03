@@ -5,6 +5,7 @@ import com.example.musicpro.entity.Members;
 import com.example.musicpro.repository.MembersRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +15,9 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Log4j2
 public class MembersService implements UserDetailsService {
+
 
     private final MembersRepository membersRepository;
 
@@ -22,6 +25,8 @@ public class MembersService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
+
+        log.info("서비스로 들어온다. ");
         Members members =
                 membersRepository.findByEmail(email);
 
@@ -29,6 +34,7 @@ public class MembersService implements UserDetailsService {
             throw new UsernameNotFoundException(email);
         }
 
+        log.info("서비스로 들어온다. 반환전에 " + members );
         return User.builder()
                 .username(members.getEmail())
                 .password(members.getPassword())

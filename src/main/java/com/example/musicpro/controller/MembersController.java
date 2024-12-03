@@ -55,24 +55,4 @@ public class MembersController {
         model.addAttribute("membersDTO", new MembersDTO());
     return "/member/signinForm"; }
 
-    // 로그인 처리
-    @PostMapping("/signin")
-    public String signin(@Valid MembersDTO membersDTO, Model model){
-        log.info("로그인 시도 : ", membersDTO.getEmail());
-        // 이메일로 사용자 찾기
-        UserDetails userDetails =
-                membersService.loadUserByUsername(membersDTO.getEmail());
-        // 비밀번호 비교
-        if (userDetails != null && userDetails.getPassword().equals(membersDTO.getPassword())){
-            log.info("로그인 성공! 로그인한 회원 정보: " + userDetails);
-
-            SecurityContextHolder.getContext().setAuthentication(
-                    new UsernamePasswordAuthenticationToken(
-                            userDetails, userDetails.getPassword(), userDetails.getAuthorities()));
-            return "member/signinForm";
-        }
-        log.info("로그인 실패. 이메일 또는 비밀번호를 다시 확인하시오.");
-        model.addAttribute("error", "이메일 또는 비밀번호가 잘못되었습니다.");
-        return "member/signinForm";
-    }
 }
